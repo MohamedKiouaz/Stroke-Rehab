@@ -4,6 +4,7 @@ rm(list = ls())
 
 n = 25
 filenames = c("1.xlsx", "2.xlsx", "3.xlsx", "4.xlsx", "5.xlsx")
+NullVectorNormThreshold = .15
 
 #####################
 
@@ -25,9 +26,10 @@ for(f in filenames) {
   
   data_avg = apply(data_avg, 2, function(X) detrend(X, 'linear'))
   
-  data_null = abs(data_avg) < .03
-  data_null = data_null[, "x"] & data_null[, "y"] & data_null[, "z"]
+  data_null = apply(data_avg[, 1:3], 1, function(X) norm(as.matrix(X))<NullVectorNormThreshold)
   data_null = which(data_null %in% TRUE)
+  
+  for
   
   data_peaks = apply(data_avg, 2, function(X) findpeaks(X, minpeakdistance = 45))
   
@@ -42,7 +44,7 @@ for(f in filenames) {
     points(data_[i], type = "p", lwd = 1, col = "red")
     points(data_peaks[[i]][, 2], data_peaks[[i]][, 1], type = "p", lwd = 2, col = "black", pch = 0)
     points(data_null, integer(length(data_null)), type = "p", col = "green", pch = 5)
-    legend("topright", c("Raw Signal", paste("Averaged and detrended Signal", n), "Peaks"), col = c("red","blue", "black"), pch = c(1, NA, 0), lty = c(0, 1, 0), lwd = c(2, 1, 2), bg = "white");
+    legend("topright", c("Raw Signal", paste("Averaged and detrended Signal", n), "Peaks", "Null Vector"), col = c("red","blue", "black", "Green"), pch = c(1, NA, 0, 5), lty = c(0, 1, 0, 0), lwd = c(2, 1, 2, 1), bg = "white");
   }
   dev.off() 
   print(f)
