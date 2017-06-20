@@ -1,9 +1,9 @@
 # This file contain the functions that create the data from a file
 # the data must be in a list of 4
-#### a matrix with the 3 vectors x y z
-#### a vector time
-#### a string filename
-#### a type of exercice
+#### x y z : a matrix of numeric
+#### time : vector
+#### filename : string
+#### exercice : type of exercice
 
 
 AcquireDataFromXlsx = function(f, exercice = NA) {
