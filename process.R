@@ -10,11 +10,11 @@ ProcessData = function(data_) {
   colnames(data_$avg) = c("x", "y", "z")
   data_$avg = apply(data_$avg, 2, function(X) detrend(X, 'linear'))
   
-  data_$null = apply(data_$avg, 1, function(X) norm(as.matrix(X))<NullVectorNormThreshold)
+  data_$null = apply(data_$avg, 1, function(X) norm(as.matrix(X))<NullVectorNormThreshold[data_$exercice])
   data_$null = which(data_$null %in% TRUE)
   i = length(data_$null)
   while(i > 1) {
-    if(abs(data_$null[i - 1] - data_$null[i]) < 5) {
+    if(abs(data_$null[i - 1] - data_$null[i]) < 15) {
       data_$null = data_$null[-i]
       #print(c(data_$null[(i-5):i], i))
     }
@@ -27,5 +27,24 @@ ProcessData = function(data_) {
 }
 
 CountMovement = function(data_) {
-  length(data_$null) - 1
+  if(data_$exercice == 1) {
+    
+    return((length(data_$null) - 1)/2)
+  }
+  if(data_$exercice == 2) {
+    
+    return((length(data_$null) - 1)/2)
+  }
+  if(data_$exercice == 3) {
+    
+    return((length(data_$null) - 1)/2)
+  }
+  if(data_$exercice == 4) {
+    
+    return((length(data_$null) - 1)/2)
+  }
+  if(data_$exercice == 5) {
+    
+    return((length(data_$null) - 1)/2)
+  }
 }

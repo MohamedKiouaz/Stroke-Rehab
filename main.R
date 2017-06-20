@@ -1,13 +1,8 @@
 # rm(list = ls())
 
-##### Variables #####
-
-n = 25
-filenames = c("1.xlsx", "2.xlsx", "3.xlsx", "4.xlsx", "5.xlsx")
-NullVectorNormThreshold = .15
-
 ##### Sources #####
 
+source(file="variable.R")
 source(file="acquire.R")
 source(file="process.R")
 source(file="render.R")
@@ -29,7 +24,7 @@ d[, 5]$exercice = 5
 dd = apply(d, 2, ProcessData)
 
 #sapply(dd, PlotData)
-sapply(dd, NicePlotData)
+sapply(dd, PlotData)
 
 c = sapply(dd, CountMovement)
 
