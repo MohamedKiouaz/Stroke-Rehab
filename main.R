@@ -7,6 +7,8 @@ source(file="acquire.R")
 source(file="process.R")
 source(file="render.R")
 
+print("Source files included")
+
 ##### Code #####
 
 # filenames = filenames[1:2]
