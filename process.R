@@ -26,23 +26,43 @@ ProcessData = function(data_) {
   data_
 }
 
+acc2pos = function(t, a_t) {
+  library(caTools)
+  v_t = a_t * 0
+  p_t = v_t
+  
+  print(a_t)
+  
+  for(i in 2:length(t)) {
+    v_t[i] = trapz(t[1:i], a_t[1:i])
+  }
+  for(i in 3:length(t)) {
+    p_t[i] = trapz(t[1:i], v_t[1:i])
+  }
+  p_t
+}
+
 CountMovement = function(data_) {
   if(data_$exercice == 1) {
     
     return((length(data_$null) - 1)/2)
   }
+  
   if(data_$exercice == 2) {
     
     return((length(data_$null) - 1)/2)
   }
+  
   if(data_$exercice == 3) {
     
     return((length(data_$null) - 1)/2)
   }
+  
   if(data_$exercice == 4) {
     
     return((length(data_$null) - 1)/2)
   }
+  
   if(data_$exercice == 5) {
     
     return((length(data_$null) - 1)/2)
