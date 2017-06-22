@@ -2,10 +2,10 @@
 
 ##### Sources #####
 
-source(file="variable.R")
-source(file="acquire.R")
-source(file="process.R")
-source(file="render.R")
+source(file = "variable.R")
+source(file = "acquire.R")
+source(file = "process.R")
+source(file = "render.R")
 
 print("Source files included")
 

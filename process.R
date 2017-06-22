@@ -21,6 +21,8 @@ ProcessData = function(data_) {
     i = i - 1
   }
   
+  data_$pos = apply(data_$avg, 2, function(X) acc2pos(data_$time, X))
+  
   #data_$peaks = apply(data_$avg, 2, function(X) findpeaks(X, minpeakdistance = 45))
   
   data_
@@ -28,10 +30,9 @@ ProcessData = function(data_) {
 
 acc2pos = function(t, a_t) {
   library(caTools)
+  
   v_t = a_t * 0
   p_t = v_t
-  
-  print(a_t)
   
   for(i in 2:length(t)) {
     v_t[i] = trapz(t[1:i], a_t[1:i])
@@ -40,6 +41,10 @@ acc2pos = function(t, a_t) {
     p_t[i] = trapz(t[1:i], v_t[1:i])
   }
   p_t
+  par(mfrow = c(3, 1))
+  plot(t, a_t)
+  plot(t, v_t)
+  plot(t, p_t)
 }
 
 CountMovement = function(data_) {
