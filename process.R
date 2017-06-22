@@ -16,10 +16,12 @@ ProcessData = function(data_) {
   while(i > 1) {
     if(abs(data_$null[i - 1] - data_$null[i]) < 15) {
       data_$null = data_$null[-i]
-      #print(c(data_$null[(i-5):i], i))
     }
     i = i - 1
   }
+
+  data_$period = median(tail(data_$null, length(data_$null) - 1) - head(data_$null, length(data_$null) - 1))
+  print(paste("Period =", data_$period))
   
   data_$pos = apply(data_$avg, 2, function(X) acc2pos(data_$time, X))
   
