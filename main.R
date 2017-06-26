@@ -11,21 +11,16 @@ print("Source files included")
 
 ##### Code #####
 
-# filenames = filenames[1:2]
 
-if(! exists("d")) {
+if(!exists("d")) {
   d = sapply(filenames, AcquireDataFromXlsx)
+  for(i in 1:length(filenames)) {
+    d[, i]$exercice = extype[i]
+  }
 }
-
-d[, 1]$exercice = 1
-d[, 2]$exercice = 2
-d[, 3]$exercice = 3
-d[, 4]$exercice = 4
-d[, 5]$exercice = 5
 
 dd = apply(d, 2, ProcessData)
 
-#sapply(dd, PlotData)
 sapply(dd, PlotData)
 
 c = sapply(dd, CountMovement)
