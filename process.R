@@ -16,7 +16,7 @@ ProcessData = function(data_) {
   data_$avg = cbind(data_$avg, A)
   colnames(data_$avg) = c("x", "y", "z", "norm")
   
-  data_$null = data_$avg[, "norm"] < NullVectorNormThreshold[1]
+  data_$null = data_$avg[, "norm"] < NullVectorNormThreshold[data_$exercice]
   data_$null = which(data_$null %in% TRUE)
   i = length(data_$null)
   while(i > 1) {
@@ -56,28 +56,37 @@ acc2pos = function(t, a_t) {
 }
 
 CountMovement = function(data_) {
-  if(data_$exercice == 1) {
-    
-    return((length(data_$null) - 1)/2)
+  count = 0
+  
+  for(i in 1:(length(data_$null) - 1)) {
+    if(max(data_$avg[data_$null[i]:data_$null[i + 1], "norm"]) >  1.5 * NullVectorNormThreshold[data_$exercice]) 
+      count = count + 1
   }
   
-  if(data_$exercice == 2) {
-    
-    return((length(data_$null) - 1)/2)
-  }
+  # if(data_$exercice == 1) {
+  #   
+  #   return((length(data_$null) - 1)/2)
+  # }
+  # 
+  # if(data_$exercice == 2) {
+  #   
+  #   return((length(data_$null) - 1)/2)
+  # }
+  # 
+  # if(data_$exercice == 3) {
+  #   
+  #   return((length(data_$null) - 1)/2)
+  # }
+  # 
+  # if(data_$exercice == 4) {
+  #   
+  #   return((length(data_$null) - 1)/2)
+  # }
+  # 
+  # if(data_$exercice == 5) {
+  #   
+  #   return((length(data_$null) - 1)/2)
+  # }
   
-  if(data_$exercice == 3) {
-    
-    return((length(data_$null) - 1)/2)
-  }
-  
-  if(data_$exercice == 4) {
-    
-    return((length(data_$null) - 1)/2)
-  }
-  
-  if(data_$exercice == 5) {
-    
-    return((length(data_$null) - 1)/2)
-  }
+  return(count)
 }
