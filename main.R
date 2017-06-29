@@ -1,4 +1,4 @@
-# rm(list = ls())
+rm(list = ls())
 
 ##### Sources #####
 
@@ -11,9 +11,10 @@ print("Source files included")
 
 ##### Code #####
 
+filenames = filenames[6]
 
 if(!exists("d")) {
-  d = sapply(filenames, AcquireDataFromXlsx)
+  d = sapply(filenames, Acquire)
   for(i in 1:length(filenames)) {
     d[, i]$exercice = extype[i]
   }
