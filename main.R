@@ -24,5 +24,3 @@ dd = apply(d, 2, ProcessData)
 
 sapply(dd, PlotData)
 
-c = sapply(dd, CountMovement)
-
