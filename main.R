@@ -11,7 +11,7 @@ print("Source files included")
 
 ##### Code #####
 
-filenames = filenames[6]
+filenames = filenames
 
 if(!exists("d")) {
   d = sapply(filenames, Acquire)
