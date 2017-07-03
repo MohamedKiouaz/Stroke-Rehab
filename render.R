@@ -6,8 +6,18 @@ PlotData = function(data_) {
   par(mfrow = c(4, 1), bg = "lightgray")
   
   
+  data_$time = data_$time - data_$time[1]
+
   plot(data_$time, data_$avg[, "norm"], type = "l", lwd = 2, col = "blue", ylim = c(0, 3), ann = FALSE, panel.first = grid(col = "white", lty = "solid"))
-  points(data_$raw["norm"], type = "p", lwd = 1, col = "red")
+  
+  abline(h = 1.5 * NullVectorNormThreshold[data_$exercice], col = "darkorchid4")
+  
+  abline(h = NullVectorNormThreshold[data_$exercice], col = "darkorchid")
+  
+  points(data_$time, data_$raw[, "norm"], type = "p", lwd = 1, col = "red")
+  
+  points(data_$time[data_$null], integer(length(data_$null)), type = "p", col = "green", pch = 5)
+  
   title(xlab = "Time", ylab = "Norm of signal", main = paste("Norm of signal, exercice", data_$exercice))
   legend("topright", c("Norm of raw Signal", paste("Norm of averaged and detrended Signal", n)), col = c("red", "blue"), pch = c(1, NA, 5), lty = c(0, 1), lwd = c(2, 1), bg = "white")
   
@@ -15,8 +25,9 @@ PlotData = function(data_) {
     plot(data_$time, data_$avg[, i], type="l", lwd = 2, col = "blue", ann = FALSE, ylim = c(-1.5, 1.5), panel.first = grid(col = "white", lty = "solid"))
     title(xlab = "Time", ylab = "Signal", main = paste("Axis", i))
     
-    points(data_$raw[, i], type = "p", lwd = 1, col = "red")
-    points(data_$null, integer(length(data_$null)), type = "p", col = "green", pch = 5)
+    points(data_$time, data_$raw[, i], type = "p", lwd = 1, col = "red")
+    
+    points(data_$time[data_$null], integer(length(data_$null)), type = "p", col = "green", pch = 5)
     
     legend("topright", c("Raw Signal", paste("Averaged and detrended Signal", n), "Null Vector"), col = c("red","blue", "Green"), pch = c(1, NA, 5), lty = c(0, 1, 0), lwd = c(2, 1, 1), bg = "white")
   }
