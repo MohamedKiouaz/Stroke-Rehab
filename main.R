@@ -11,16 +11,14 @@ print("Source files included")
 
 ##### Code #####
 
-filenames = filenames
-
 if(!exists("d")) {
   d = sapply(filenames, Acquire)
-  for(i in 1:length(filenames)) {
+  for(i in 1:length(filenames))
     d[, i]$exercice = extype[i]
-  }
 }
 
 dd = apply(d, 2, ProcessData)
 
-sapply(dd, PlotData)
+sapply(dd, informations)
 
+sapply(dd, PlotData)
