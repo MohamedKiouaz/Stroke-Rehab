@@ -36,9 +36,8 @@ AcquireDataFromXlsx = function(f, exercice = NA) {
 
 AcquireDataFromCsv = function(f, exercice = NA) {
   data_ = read.csv(f, header = FALSE)
-  data_[, c(1, 3)] = NULL
-  colnames(data_) = c("time", "sequence", "x", "y", "z")
-  data_ = list(data_[3:5], data_[[1]], f, exercice)
+  colnames(data_) = c("time", "x", "y", "z")
+  data_ = list(data_[2:4], data_[[1]], f, exercice)
   names(data_) = c("raw", "time", "filename", "exercice")
   print(paste("Data acquired from", f))
   data_

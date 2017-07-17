@@ -1,10 +1,9 @@
 PlotData = function(data_) {
-  outputfile = paste(sample(0:1000, 1), "_", data_$filename, ".pdf", sep = "")
+  outputfile = paste("render/", sample(0:1000, 1), "_", data_$filename[length(data_$filename) - 4:length(data_$filename)], ".pdf", sep = "")
 
   pdf(file = outputfile, 15, 10)
 
   par(mfrow = c(4, 1), bg = "lightgray")
-
 
   data_$time = data_$time - data_$time[1]
 
@@ -14,7 +13,7 @@ PlotData = function(data_) {
 
   abline(h = data_$bot_threshold, col = "darkorchid")
 
-  points(data_$time, data_$raw[, "norm"], type = "p", lwd = 1, col = "red")
+  #points(data_$time, data_$raw[, "norm"], type = "p", lwd = 1, col = "red")
 
   points(data_$time[data_$null], integer(length(data_$null)), type = "p", col = "green", pch = 5)
 
@@ -25,7 +24,7 @@ PlotData = function(data_) {
     plot(data_$time, data_$avg[, i], type="l", lwd = 2, col = "blue", ann = FALSE, ylim = c(-1.5, 1.5), panel.first = grid(col = "white", lty = "solid"))
     title(xlab = "Time", ylab = "Signal", main = paste("Axis", i))
 
-    points(data_$time, data_$raw[, i], type = "p", lwd = 1, col = "red")
+    #points(data_$time, data_$raw[, i], type = "p", lwd = 1, col = "red")
 
     points(data_$time[data_$null], integer(length(data_$null)), type = "p", col = "green", pch = 5)
 
