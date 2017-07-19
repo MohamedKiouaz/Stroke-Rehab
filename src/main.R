@@ -11,10 +11,10 @@ print("Source files included")
 
 ##### Code #####
 
-if(!exists("d")) {
-  d = sapply(paste(data_folder, "/", filenames, sep = ""), Acquire)
-  for(i in 1:length(filenames))
-    d[, i]$exercice = extype[i]
+if (!exists("d")) {
+	d = sapply(paste(data_folder, "/", filenames, sep = ""), Acquire)
+	for (i in 1:length(filenames))
+		d[, i]$exercice = extype[i]
 }
 
 dd = apply(d, 2, ProcessData)
