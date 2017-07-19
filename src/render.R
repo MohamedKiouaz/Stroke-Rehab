@@ -59,6 +59,7 @@ PlotData = function(data_) {
 				 	paste("File =", data_$filename),
 				 	paste("Exercice =", data_$exercice),
 				 	paste("Score =", data_$score),
+				 	paste("Score2 =", data_$score2),
 				 	paste("Reps =", length(data_$null))
 				 ),
 				 bty = "n")

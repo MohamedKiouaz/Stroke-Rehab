@@ -3,6 +3,8 @@ ProcessData = function(data_) {
 	
 	print(paste("Processing from", data_$filename))
 	
+	start_time = Sys.time()
+	
 	avg_filter = as.numeric(matrix(1 / n, 1, n))
 	
 	A = apply(data_$raw, 1, function(X)
@@ -27,9 +29,18 @@ ProcessData = function(data_) {
 	
 	data_$score = Score(data_)
 	
+	data_$similarity = DTWSimilarity(data_)
+	
+	data_$score2 = sum(data_$similarity < .18) / (length(data_$null) - 1) ^ 2
+	print(data_$score2)
+	
+	#print(GetPeriod(data_, 5))
+	
 	#data_$pos = apply(data_$avg[, 1:3], 2, function(X) acc2pos(data_$time, X))
 	
 	#print(lm(as.matrix(raw) ~ as.matrix(time), data = data_))
+	
+	print(Sys.time() - start_time)
 	
 	data_
 }
@@ -102,5 +113,24 @@ Score = function(data_) {
 		resp[i] = resp[i] / length(data_$null[i]:(data_$null[i + 1] - 1))
 	}
 	
-	median((1 - resp)^5)
+	median(1 - resp) ^ 5
+}
+
+GetPeriod = function(data_, i) {
+	data_$raw[data_$null[i]:(data_$null[i + 1] - 1), "norm"]
+}
+
+DTWSimilarity = function(data_) {
+	library(dtw)
+	similarity = matrix(0, length(data_$null) - 1, length(data_$null) - 1)
+	for (i in 1:(length(data_$null) - 1))
+		for (j in 1:(length(data_$null) - 1)) {
+			#print(dim(GetPeriod(data_, i)), dim(GetPeriod(data_, j)))
+			alignment = dtw(GetPeriod(data_, i), GetPeriod(data_, j), keep = TRUE)
+			#if(similarity[i, j] > mean(similarity))
+			#plot(alignment)
+			similarity[i, j] = alignment$normalizedDistance
+		}
+	
+	similarity
 }
