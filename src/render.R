@@ -107,6 +107,14 @@ PlotData = function(data_) {
 		)
 	}
 	
+	par(mfrow = c(1, 1), bg = "lightgray")
+	
+	library(fields)
+	
+	image.plot(1 - data_$similarity, col = colorRampPalette(c("white", "red"))(25))
+	
+	image.plot(data_$similarity < .18)
+	
 	dev.off()
 	
 	print(paste("Render in", outputfile), quote = FALSE)
@@ -126,47 +134,6 @@ informations = function(data_) {
 		),
 		quote = FALSE
 	)
-}
-
-SimplePlotData = function(data_) {
-	pdf(file = paste("simple_", data_$filename, ".pdf", sep = ""), 15, 10)
-	par(mfrow = c(3, 1), bg = "lightgray")
-	print(data_$peaks)
-	for (i in c("x", "y", "z")) {
-		plot(
-			data_$time,
-			data_$avg[, i],
-			type = "l",
-			lwd = 2,
-			col = "blue",
-			axes = FALSE,
-			ann = FALSE,
-			ylim = c(-1.5, 1.5),
-			panel.first = grid(col = "white", lty = "solid")
-		)
-		axis(1, las = 1, at = seq(0, length(data_$time), by = 25))
-		axis(2, las = 1)
-		box()
-		title(xlab = "Time",
-					ylab = "Signal",
-					main = paste("Axis", i))
-		points(data_$raw[, i],
-					 type = "p",
-					 lwd = 1,
-					 col = "red")
-		legend(
-			"topright",
-			c("Raw Signal", paste("Averaged and detrended Signal", n)),
-			col = c("red", "blue"),
-			pch = c(1, NA),
-			lty = c(0, 1),
-			lwd = c(2, 1),
-			bg = "white"
-		)
-		
-	}
-	dev.off()
-	print(paste("Render in", data_$filename), quote = FALSE)
 }
 
 NicePlotData = function(data_) {
