@@ -54,15 +54,17 @@ PlotData = function(data_) {
 		bg = "white"
 	)
 	
-	legend("topleft",
-				 legend = c(
-				 	paste("File =", data_$filename),
-				 	paste("Exercice =", data_$exercice),
-				 	paste("Score =", data_$score),
-				 	paste("Score2 =", data_$score2),
-				 	paste("Reps =", length(data_$null))
-				 ),
-				 bty = "n")
+	legend(
+		"topleft",
+		legend = c(
+			paste("File =", data_$filename),
+			paste("Exercice =", data_$exercice),
+			paste("Score =", data_$score),
+			paste("Score2 =", data_$score2),
+			paste("Reps =", length(data_$null))
+		),
+		bty = "n"
+	)
 	
 	for (i in c("x", "y", "z")) {
 		plot(
@@ -107,7 +109,7 @@ PlotData = function(data_) {
 	
 	dev.off()
 	
-	print(paste("Render in", outputfile))
+	print(paste("Render in", outputfile), quote = FALSE)
 }
 
 informations = function(data_) {
@@ -121,7 +123,8 @@ informations = function(data_) {
 			length(data_$null),
 			"Period =",
 			data_$period
-		)
+		),
+		quote = FALSE
 	)
 }
 
@@ -163,7 +166,7 @@ SimplePlotData = function(data_) {
 		
 	}
 	dev.off()
-	print(paste("Render in", data_$filename))
+	print(paste("Render in", data_$filename), quote = FALSE)
 }
 
 NicePlotData = function(data_) {

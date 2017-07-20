@@ -1,7 +1,7 @@
 ProcessData = function(data_) {
 	library(pracma)
 	
-	print(paste("Processing from", data_$filename))
+	print(paste("Processing from", data_$filename), quote = FALSE)
 	
 	start_time = Sys.time()
 	
@@ -32,13 +32,8 @@ ProcessData = function(data_) {
 	data_$similarity = DTWSimilarity(data_)
 	
 	data_$score2 = sum(data_$similarity < .18) / (length(data_$null) - 1) ^ 2
-	print(data_$score2)
-	
-	#print(GetPeriod(data_, 5))
 	
 	#data_$pos = apply(data_$avg[, 1:3], 2, function(X) acc2pos(data_$time, X))
-	
-	#print(lm(as.matrix(raw) ~ as.matrix(time), data = data_))
 	
 	print(Sys.time() - start_time)
 	
@@ -102,7 +97,6 @@ Score = function(data_) {
 	resp = matrix(0, 1, length(data_$null))
 	for (i in 1:(length(data_$null) - 1))
 	{
-		#print(paste("i", i))
 		for (j in data_$null[i]:(data_$null[i + 1] - 1))
 		{
 			#print(data_$avg[j, 1:3])
@@ -125,7 +119,6 @@ DTWSimilarity = function(data_) {
 	similarity = matrix(0, length(data_$null) - 1, length(data_$null) - 1)
 	for (i in 1:(length(data_$null) - 1))
 		for (j in 1:(length(data_$null) - 1)) {
-			#print(dim(GetPeriod(data_, i)), dim(GetPeriod(data_, j)))
 			alignment = dtw(GetPeriod(data_, i), GetPeriod(data_, j), keep = TRUE)
 			#if(similarity[i, j] > mean(similarity))
 			#plot(alignment)
