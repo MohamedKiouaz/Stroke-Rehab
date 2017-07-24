@@ -60,22 +60,22 @@ acc2pos = function(t, a_t) {
 }
 
 Movement = function(data_) {
-	data_$top_threshold = quantile(data_$avg[, "norm"], .6)
+	data_$top_threshold = quantile(data_$avg[, "norm"], .55)
 	data_$bot_threshold = quantile(data_$avg[, "norm"], .2)
 	
-	data_$null = data_$avg[, "norm"] < data_$top_threshold
+	data_$null = data_$avg[, "norm"] > data_$top_threshold
 	data_$null = which(data_$null %in% TRUE)
+	
 	i = length(data_$null)
 	while (i > 1) {
-		if (abs(data_$null[i - 1] - data_$null[i]) < 15) {
+		if (abs(data_$time[data_$null[i - 1]] - data_$time[data_$null[i]]) < .1)
 			data_$null = data_$null[-i]
-		}
 		i = i - 1
 	}
 	
 	i = 1
 	while (i < length(data_$null) - 1) {
-		if (max(data_$avg[data_$null[i]:data_$null[i + 1], "norm"]) < data_$bot_threshold)
+		if (min(data_$avg[data_$null[i]:data_$null[i + 1], "norm"]) > data_$bot_threshold)
 			data_$null = data_$null[-i - 1]
 		else
 			i = i + 1
