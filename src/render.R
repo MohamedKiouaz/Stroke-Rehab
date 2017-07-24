@@ -66,6 +66,14 @@ PlotData = function(data_) {
 		bty = "n"
 	)
 	
+	text(
+		data_$time[data_$null[-1]],
+		0,
+		labels = 1:(length(data_$null) - 1),
+		cex = 0.7,
+		pos = 2
+	)
+	
 	for (i in c("x", "y", "z")) {
 		plot(
 			data_$time,
@@ -106,10 +114,10 @@ PlotData = function(data_) {
 			bg = "white"
 		)
 	}
+
+	library(fields)		
 	
 	par(mfrow = c(1, 1), bg = "lightgray")
-	
-	library(fields)
 	
 	image.plot(1 - data_$similarity, col = colorRampPalette(c("white", "red"))(25))
 	
