@@ -69,7 +69,7 @@ PlotData = function(data_) {
 	text(
 		data_$time[data_$null[-1]],
 		0,
-		labels = 1:(length(data_$null) - 1),
+		labels = 1:data_$count,
 		cex = 0.7,
 		pos = 2
 	)
@@ -121,7 +121,12 @@ PlotData = function(data_) {
 	
 	image.plot(1 - data_$similarity, col = colorRampPalette(c("white", "red"))(25))
 	
-	image.plot(data_$similarity < .18)
+	if(exists("similarity_x", where = data_))
+		image.plot(1 - data_$similarity_x, col = colorRampPalette(c("white", "red"))(25))
+	if(exists("similarity_y", where = data_))
+		image.plot(1 - data_$similarity_y, col = colorRampPalette(c("white", "red"))(25))
+	if(exists("similarity_z", where = data_))
+		image.plot(1 - data_$similarity_z, col = colorRampPalette(c("white", "red"))(25))
 	
 	dev.off()
 	
