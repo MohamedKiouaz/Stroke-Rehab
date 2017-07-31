@@ -12,13 +12,15 @@ PlotData = function(data_) {
 	
 	data_$time = data_$time - data_$time[1]
 	
+	Y_MAX = max(abs(data_$avg) * 1.5)
+	
 	plot(
 		data_$time,
 		data_$avg[, "norm"],
 		type = "l",
 		lwd = 2,
 		col = "blue",
-		ylim = c(0, 3),
+		ylim = c(0, Y_MAX),
 		ann = FALSE,
 		panel.first = grid(col = "white", lty = "solid")
 	)
@@ -61,7 +63,7 @@ PlotData = function(data_) {
 			paste("Exercice =", data_$exercice),
 			paste("Score =", data_$score),
 			paste("Score2 =", data_$score2),
-			paste("Reps =", length(data_$null))
+			paste("Reps =", data_$count)
 		),
 		bty = "n"
 	)
@@ -82,7 +84,7 @@ PlotData = function(data_) {
 			lwd = 2,
 			col = "blue",
 			ann = FALSE,
-			ylim = c(-1.5, 1.5),
+			ylim = c(-Y_MAX, Y_MAX),
 			panel.first = grid(col = "white", lty = "solid")
 		)
 		

@@ -21,11 +21,16 @@ if (!exists("d")) {
 		d[, i]$exercice = extype[i]
 	
 	print("Data loaded", quote = FALSE)
-} else {
+} else
 	print("Data already loaded", quote = FALSE)
-}
 
 start_time = Sys.time()
+
+d[, 1]$time = 1:length(d[, 1]$time) / 25
+d[, 2]$time = 1:length(d[, 2]$time) / 25
+d[, 3]$time = 1:length(d[, 3]$time) / 25
+d[, 4]$time = 1:length(d[, 4]$time) / 25
+d[, 5]$time = 1:length(d[, 5]$time) / 25
 
 dd = apply(d, 2, ProcessData)
 
@@ -33,7 +38,8 @@ print(Sys.time() - start_time)
 
 sapply(dd, informations)
 
-sapply(dd, PlotData)
+# sapply(dd, PlotData)
 
-summary(dd)
-summary(dd[[1]])
+print(summary(dd))
+
+print(summary(dd[[1]]))
