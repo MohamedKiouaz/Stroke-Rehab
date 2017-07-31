@@ -29,15 +29,22 @@ ProcessData = function(data_) {
 	data_$score = Score(data_)
 	
 	data_$similarity = DTWSimilarity(data_, "norm")
-	data_$similarity_x = DTWSimilarity(data_, "x")
-	data_$similarity_y = DTWSimilarity(data_, "y")
-	data_$similarity_z = DTWSimilarity(data_, "z")
+	#data_$similarity_x = DTWSimilarity(data_, "x")
+	#data_$similarity_y = DTWSimilarity(data_, "y")
+	#data_$similarity_z = DTWSimilarity(data_, "z")
 	
 	data_$score2 = sum(data_$similarity < .18) / data_$count ^ 2
+	
+	data_$similarity2 = CORSimilarity(data_, "norm")
+	
+	data_$score3 = sum(data_$similarity < .18) / data_$count ^ 2
 	
 	#data_$pos = apply(data_$pos[, 1:3], 2, function(X) acc2pos(data_$time, X))
 	
 	print(Sys.time() - start_time)
+	
+	PlotData(data_)
+	
 	data_
 }
 
@@ -71,7 +78,7 @@ Movement = function(data_) {
 	
 	i = length(data_$null)
 	while (i > 1) {
-		if (abs(data_$time[data_$null[i - 1]] - data_$time[data_$null[i]]) < .1)
+		if (abs(data_$time[data_$null[i - 1]] - data_$time[data_$null[i]]) < .2)
 			data_$null = data_$null[-i]
 		i = i - 1
 	}
@@ -96,17 +103,15 @@ CountMovement = function(data_) {
 Score = function(data_) {
 	theta = function(a, b)
 		acos(sum(a * b) / (sqrt(sum(a * a)) * sqrt(sum(b * b))))
+	
 	resp = matrix(0, 1, length(data_$null))
+	
 	for (i in 1:data_$count)
 	{
-		for (j in data_$null[i]:(data_$null[i + 1] - 1))
-		{
-			#print(data_$avg[j, 1:3])
-			#print(theta(data_$avg[j, 1:3], data_$avg[j + 1, 1:3])/2/pi*360)
+		for (j in data_$null[i]:data_$null[i + 1])
 			if (theta(data_$avg[j, 1:3], data_$avg[j + 1, 1:3]) / 2 / pi * 360 > 7)
 				resp[i] = resp[i] + 1
-		}
-		resp[i] = resp[i] / length(data_$null[i]:(data_$null[i + 1] - 1))
+			resp[i] = resp[i] / (data_$null[i + 1] - data_$null[i])
 	}
 	
 	median(1 - resp) ^ 5
@@ -119,18 +124,28 @@ GetPeriod = function(data_, i, col) {
 DTWSimilarity = function(data_, col) {
 	library(dtw)
 	
-	#similarity = matrix(0, data_$count, data_$count)
+	similarity = matrix(0, data_$count, data_$count)
 	
-	lambda = function(i, j, col) {
-		alignment = dtw(GetPeriod(data_, i, col), GetPeriod(data_, j, col), keep = TRUE)
-		
-		alignment$normalizedDistance
-	}
-	
-	
-	similarity = sapply(1:data_$count, function(i)
-		sapply(1:data_$count, function(j)
-			lambda(i, j, col)))
+	for (i in 1:data_$count)
+		for (j in 1:i) {
+			alignment = dtw(GetPeriod(data_, i, col), GetPeriod(data_, j, col), keep = TRUE)
+			
+			similarity[i, j] = alignment$normalizedDistance
+			similarity[j, i] = alignment$normalizedDistance
+		}
 	
 	similarity
+}
+
+CORSimilarity = function(data_, col) {
+	s = matrix(0, data_$count, data_$count)
+	
+	for (i in 1:data_$count)
+		for (j in 1:i) {
+			a = ccf(GetPeriod(data_, i, col), GetPeriod(data_, j, col), plot = FALSE)
+			s[i, j] = max(a$acf)
+			s[j, i] = max(a$acf)
+		}
+	
+	s
 }

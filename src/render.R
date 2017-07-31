@@ -63,6 +63,7 @@ PlotData = function(data_) {
 			paste("Exercice =", data_$exercice),
 			paste("Score =", data_$score),
 			paste("Score2 =", data_$score2),
+			paste("Score3 =", data_$score3),
 			paste("Reps =", data_$count)
 		),
 		bty = "n"
@@ -116,18 +117,38 @@ PlotData = function(data_) {
 			bg = "white"
 		)
 	}
-
-	library(fields)		
+	
+	library(fields)
 	
 	par(mfrow = c(1, 1), bg = "lightgray")
 	
-	image.plot(1 - data_$similarity, col = colorRampPalette(c("white", "red"))(25))
+	image.plot(
+		1:data_$count,
+		1:data_$count,
+		data_$similarity2,
+		legend.lab = "Similarity",
+		xlab = "Movement",
+		ylab = "Movement",
+		zlim = c(0, 1),
+		main = "Similarity Matrix using Correlation"
+	)
 	
-	if(exists("similarity_x", where = data_))
+	image.plot(
+		1:data_$count,
+		1:data_$count,
+		1 - data_$similarity,
+		legend.lab = "Similarity",
+		zlim = c(0, 1),
+		xlab = "Movement",
+		ylab = "Movement",
+		main = "Similarity Matrix using DTW"
+	)
+	
+	if (exists("similarity_x", where = data_))
 		image.plot(1 - data_$similarity_x, col = colorRampPalette(c("white", "red"))(25))
-	if(exists("similarity_y", where = data_))
+	if (exists("similarity_y", where = data_))
 		image.plot(1 - data_$similarity_y, col = colorRampPalette(c("white", "red"))(25))
-	if(exists("similarity_z", where = data_))
+	if (exists("similarity_z", where = data_))
 		image.plot(1 - data_$similarity_z, col = colorRampPalette(c("white", "red"))(25))
 	
 	dev.off()
