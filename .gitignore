@@ -2,6 +2,7 @@
 !*.R
 !*.bat
 !*.csv
+!*.Rproj
 !/src
 !/data
 !/render
