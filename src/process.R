@@ -33,11 +33,11 @@ ProcessData = function(data_) {
 	#data_$similarity_y = DTWSimilarity(data_, "y")
 	#data_$similarity_z = DTWSimilarity(data_, "z")
 	
-	data_$score2 = sum(data_$similarity < .18) / data_$count ^ 2
+	data_$score2 = sum(data_$similarity < .05) / data_$count ^ 2
 	
 	data_$similarity2 = CORSimilarity(data_, "norm")
 	
-	data_$score3 = sum(data_$similarity < .18) / data_$count ^ 2
+	data_$score3 = sum(data_$similarity2 < .18) / data_$count ^ 2
 	
 	#data_$pos = apply(data_$pos[, 1:3], 2, function(X) acc2pos(data_$time, X))
 	
@@ -128,10 +128,38 @@ DTWSimilarity = function(data_, col) {
 	
 	for (i in 1:data_$count)
 		for (j in 1:i) {
-			alignment = dtw(GetPeriod(data_, i, col), GetPeriod(data_, j, col), keep = TRUE)
+			alignment = dtw(GetPeriod(data_, i, col),
+											GetPeriod(data_, j, col),
+											keep = TRUE)
+			
 			
 			similarity[i, j] = alignment$normalizedDistance
-			similarity[j, i] = alignment$normalizedDistance
+			
+			if (i != j) {
+				similarity[j, i] = alignment$normalizedDistance
+				
+				if (alignment$normalizedDistance < .02) {
+					outputfile = paste(
+						"render/dtw/",
+						i,
+						"_",
+						j,
+						"_",
+						data_$exercice,
+						"_",
+						sample(0:10000, 1),
+						".pdf",
+						sep = ""
+					)
+					
+					pdf(file = outputfile, 15, 10)
+					
+					plot(alignment,
+							 type = "twoway",
+							 main = paste("DTW", i, j, data_$filename))
+					dev.off()
+				}
+			}
 		}
 	
 	similarity

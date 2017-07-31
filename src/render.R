@@ -129,7 +129,6 @@ PlotData = function(data_) {
 		legend.lab = "Similarity",
 		xlab = "Movement",
 		ylab = "Movement",
-		zlim = c(0, 1),
 		main = "Similarity Matrix using Correlation"
 	)
 	
@@ -138,7 +137,6 @@ PlotData = function(data_) {
 		1:data_$count,
 		1 - data_$similarity,
 		legend.lab = "Similarity",
-		zlim = c(0, 1),
 		xlab = "Movement",
 		ylab = "Movement",
 		main = "Similarity Matrix using DTW"
@@ -153,7 +151,7 @@ PlotData = function(data_) {
 	
 	dev.off()
 	
-	print(paste("Render in", outputfile), quote = FALSE)
+	print(paste("Plotted in", outputfile), quote = FALSE)
 }
 
 informations = function(data_) {
