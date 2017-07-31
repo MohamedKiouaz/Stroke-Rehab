@@ -1,1 +1,1 @@
-del *.pdf
+del *.pdf /s
