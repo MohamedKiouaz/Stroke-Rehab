@@ -47,7 +47,10 @@ PlotData = function(data_) {
 		"topright",
 		c(
 			"Norm of raw Signal",
-			paste("Norm of averaged and detrended Signal", n)
+			paste(
+				"Norm of averaged and detrended Signal",
+				AVERAGING_FILTER_STEPS
+			)
 		),
 		col = c("red", "blue"),
 		pch = c(1, NA, 5),
@@ -107,7 +110,7 @@ PlotData = function(data_) {
 			"topright",
 			c(
 				"Raw Signal",
-				paste("Averaged and detrended Signal", n),
+				paste("Averaged and detrended Signal", AVERAGING_FILTER_STEPS),
 				"Null Vector"
 			),
 			col = c("red", "blue", "Green"),
@@ -148,6 +151,10 @@ PlotData = function(data_) {
 		image.plot(1 - data_$similarity_y, col = colorRampPalette(c("white", "red"))(25))
 	if (exists("similarity_z", where = data_))
 		image.plot(1 - data_$similarity_z, col = colorRampPalette(c("white", "red"))(25))
+	
+	hist(data_$similarity, breaks	= 10, freq = FALSE)
+	
+	hist(data_$similarity2, breaks	= 10, freq = FALSE)
 	
 	dev.off()
 	

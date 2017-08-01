@@ -14,8 +14,12 @@ print("Source files included", quote = FALSE)
 
 ##### Code #####
 
+files = paste(paste(data_frame$folder, "/", sep = ""),
+							data_frame$filename,
+							sep = "")
+
 if (!exists("d")) {
-	d = sapply(paste(data_folder, "/", filenames, sep = ""), Acquire)
+	d = sapply(files, Acquire)
 	
 	for (i in 1:length(filenames))
 		d[, i]$exercice = extype[i]
@@ -37,8 +41,6 @@ dd = apply(d, 2, ProcessData)
 print(Sys.time() - start_time)
 
 sapply(dd, informations)
-
-# sapply(dd, PlotData)
 
 print(summary(dd))
 

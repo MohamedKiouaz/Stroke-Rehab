@@ -5,7 +5,7 @@ ProcessData = function(data_) {
 	
 	start_time = Sys.time()
 	
-	avg_filter = as.numeric(matrix(1 / n, 1, n))
+	avg_filter = as.numeric(matrix(1 / AVERAGING_FILTER_STEPS, 1, AVERAGING_FILTER_STEPS))
 	
 	A = apply(data_$raw, 1, function(X)
 		norm(as.matrix(X)))

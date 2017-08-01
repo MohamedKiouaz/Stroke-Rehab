@@ -1,5 +1,5 @@
 # Average filter range
-n = 40
+AVERAGING_FILTER_STEPS = 40
 
 # Files to analyze
 
@@ -23,4 +23,10 @@ filenames = c(
 
 extype = c(1, 2, 3, 4, 5, 1, 1, 1, 1, 3, 5)
 
-reps = c(NA, NA, NA, NA, NA, NA)
+reps = c(48, 45, 46, 57, 5, 1, 1, 1, 1, 3, 5)
+
+data_frame = data.frame(folder = data_folder, filename = filenames,
+												extype = extype,
+												reps = reps, stringsAsFactors=FALSE)
+
+print(data_frame)
