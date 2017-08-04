@@ -10,7 +10,7 @@ source(file = "src/acquire.R")
 source(file = "src/process.R")
 source(file = "src/render.R")
 
-print("Source files included", quote = FALSE)
+cat("Source files included\n")
 
 ##### Code #####
 
@@ -24,9 +24,9 @@ if (!exists("d")) {
 	for (i in 1:length(filenames))
 		d[, i]$exercice = extype[i]
 	
-	print("Data loaded", quote = FALSE)
+	cat("Data loaded\n")
 } else
-	print("Data already loaded", quote = FALSE)
+	cat("Data already loaded\n")
 
 start_time = Sys.time()
 

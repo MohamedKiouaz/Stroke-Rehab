@@ -152,29 +152,13 @@ PlotData = function(data_) {
 	if (exists("similarity_z", where = data_))
 		image.plot(1 - data_$similarity_z, col = colorRampPalette(c("white", "red"))(25))
 	
-	hist(data_$similarity, breaks	= 10, freq = FALSE)
+	hist(data_$similarity, breaks	= 25, freq = FALSE)
 	
-	hist(data_$similarity2, breaks	= 10, freq = FALSE)
+	hist(data_$similarity2, breaks	= 25, freq = TRUE)
 	
 	dev.off()
 	
-	print(paste("Plotted in", outputfile), quote = FALSE)
-}
-
-informations = function(data_) {
-	print(
-		paste(
-			"Exercice",
-			data_$exercice,
-			"Score",
-			data_$score,
-			"Number",
-			length(data_$null),
-			"Period =",
-			data_$period
-		),
-		quote = FALSE
-	)
+	cat("Plotted in", outputfile, "\n")
 }
 
 NicePlotData = function(data_) {

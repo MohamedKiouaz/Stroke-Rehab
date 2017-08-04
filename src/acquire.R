@@ -14,7 +14,7 @@ Acquire = function(f, exercice = NA) {
 			data_ = AcquireDataFromXlsx(f, exercice)
 		}
 		else {
-			print(paste("Failed to load ", f), quote = FALSE)
+			cat("Failed to load", f, "\n")
 			return(NA)
 		}
 	}
@@ -29,16 +29,17 @@ AcquireDataFromXlsx = function(f, exercice = NA) {
 	colnames(data_) = c("x", "y", "z")
 	data_ = list(data_, 1:nrow(data_), f, exercice)
 	names(data_) = c("raw", "time", "filename", "exercice")
-	print(paste("Data acquired from", f), quote = FALSE)
+	cat("Data acquired from", f, "\n")
 	data_
 }
 
 
 AcquireDataFromCsv = function(f, exercice = NA) {
 	data_ = read.csv(f, header = FALSE)
+	
 	colnames(data_) = c("time", "x", "y", "z")
 	data_ = list(data_[2:4], data_[[1]], f, exercice)
 	names(data_) = c("raw", "time", "filename", "exercice")
-	print(paste("Data acquired from", f), quote = FALSE)
+	cat("Data acquired from", f, "\n")
 	data_
 }

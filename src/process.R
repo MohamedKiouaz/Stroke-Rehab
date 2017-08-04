@@ -1,7 +1,7 @@
 ProcessData = function(data_) {
 	library(pracma)
 	
-	print(paste("Processing from", data_$filename), quote = FALSE)
+	cat("Processing from", data_$filename, "\n")
 	
 	start_time = Sys.time()
 	
@@ -33,15 +33,17 @@ ProcessData = function(data_) {
 	#data_$similarity_y = DTWSimilarity(data_, "y")
 	#data_$similarity_z = DTWSimilarity(data_, "z")
 	
-	data_$score2 = sum(data_$similarity < .05) / data_$count ^ 2
+	data_$score2 = median(data_$similarity)
 	
 	data_$similarity2 = CORSimilarity(data_, "norm")
 	
-	data_$score3 = sum(data_$similarity2 < .18) / data_$count ^ 2
+	data_$score3 = median(data_$similarity2)
 	
 	#data_$pos = apply(data_$pos[, 1:3], 2, function(X) acc2pos(data_$time, X))
 	
-	print(Sys.time() - start_time)
+	print(data_$avg[which.max(data_$avg[, "norm"]), 1:3])
+	
+	cat(Sys.time() - start_time, "sec to process", data_$filename, "\n")
 	
 	PlotData(data_)
 	
