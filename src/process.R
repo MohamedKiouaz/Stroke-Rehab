@@ -45,7 +45,7 @@ ProcessData = function(data_) {
 	
 	cat(Sys.time() - start_time, "sec to process", data_$filename, "\n")
 	
-	PlotData(data_)
+	NicePlotData(data_)
 	
 	data_
 }

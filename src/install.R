@@ -1,3 +1,6 @@
 install.packages("pracma")
 install.packages("dtw")
 install.packages("fields")
+install.packages("caret")
+install.packages("ggplot2")
+install.packages("gridExtra")

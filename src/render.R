@@ -1,10 +1,5 @@
 PlotData = function(data_) {
-	outputfile = paste("render/",
-										 data_$exercice,
-										 "_",
-										 sample(0:10000, 1),
-										 ".pdf",
-										 sep = "")
+	outputfile = paste("render/", data_$exercice, "_", sample(0:10000, 1), ".pdf", sep = "")
 	
 	pdf(file = outputfile, 15, 10)
 	
@@ -163,10 +158,39 @@ PlotData = function(data_) {
 
 NicePlotData = function(data_) {
 	library(ggplot2)
+	library(gridExtra)
 	
-	e = data.frame(data_$raw[, 1], data_$avg[, 1], data_$time)
-	names(e) = c("raw", "avg", "time")
+	data_render = data.frame(time = data_$time,
+													 avg = data_$avg,
+													 raw = as.matrix(data_$raw))
 	
-	p = ggplot(e, aes(time)) + geom_line(aes(y = raw), colour = "grey") + geom_line(aes(y = avg), colour = "blue") + coord_cartesian(ylim = c(-1.5, 1.5))
-	print(p)
+	# print(str(data_render))
+	
+	p0 = ggplot(data_render, aes(time))  + coord_cartesian()
+	p0 = p0 + geom_line(aes(y = raw.norm, colour = "Raw"))
+	p0 = p0 + labs(x = "Time", y = "Norm", title = "Norm")
+	p0 = p0 + scale_color_discrete(name = NULL)
+	
+	p1 = ggplot(data_render, aes(time))  + coord_cartesian()
+	p1 = p1 + geom_line(aes(y = avg.norm, colour = "Averaged"))
+	p1 = p1 + geom_hline(aes(yintercept = y, colour = "Thresholds"), data = data.frame(y = c(data_$top_threshold, data_$bot_threshold)))
+	p1 = p1 + labs(x = "Time", y = "Norm", title = "Norm")
+	p1 = p1 + scale_color_discrete(name = NULL)
+	
+	p2 = ggplot(data_render, aes(time)) + coord_cartesian()
+	p2 = p2 + geom_line(aes(y = avg.x, colour = "X"))
+	p2 = p2 + geom_line(aes(y = avg.y, colour = "Y"))
+	p2 = p2 + geom_line(aes(y = avg.z, colour = "Z"))
+	p2 = p2 + labs(x = "Time", y = "Signal", title = "Averaged values")
+	p2 = p2 + scale_color_discrete(name = NULL)
+	
+	outputfile = paste("render/", data_$exercice, "_", sample(0:10000, 1), ".pdf", sep = "")
+	
+	pdf(outputfile, 16, 9)
+	
+	P = grid.arrange(p0, p1, p2, ncol = 1)
+	
+	dev.off()
+	
+	cat("Plotted in", outputfile, "\n")
 }
