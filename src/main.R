@@ -40,8 +40,6 @@ dd = apply(d, 2, ProcessData)
 
 print(Sys.time() - start_time)
 
-sapply(dd, informations)
-
 print(summary(dd))
 
 print(summary(dd[[1]]))
