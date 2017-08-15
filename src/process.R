@@ -47,22 +47,20 @@ ProcessData = function(data_) {
 distance = function(t, a_t) {
 	a_t = as.matrix(a_t)
 	
-	print(str(t))
-	print(str(a_t))
-	
-	library(caTools)
+	library(pracma)
 	
 	v_t = a_t * 0
 	p_t = v_t
 	
-	v_t = trapz(t, a_t)
-	p_t = trapz(t, v_t)
+	v_t[, 1] = cumtrapz(t, a_t[, 1])
+	v_t[, 2] = cumtrapz(t, a_t[, 2])
+	v_t[, 3] = cumtrapz(t, a_t[, 3])
 	
-	print(str(p_t))
+	p_t[, 1] = cumtrapz(t, v_t[, 1])
+	p_t[, 2] = cumtrapz(t, v_t[, 2])
+	p_t[, 3] = cumtrapz(t, v_t[, 3])
 	
-	print(tail(p_t) - head(p_t))
-	
-	norm(tail(p_t) - head(p_t), t = "F")
+	norm(p_t[nrow(p_t), 1:3] - p_t[1, 1:3], t = "F")
 }
 
 Movement = function(data_) {
