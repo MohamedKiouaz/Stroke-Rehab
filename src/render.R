@@ -13,7 +13,7 @@ PlotData = function(data_) {
 	
 	info = paste(
 		data_$filename,
-		", exercice",
+		", exercice ",
 		data_$extype,
 		", ",
 		floor(data_$count/2),
