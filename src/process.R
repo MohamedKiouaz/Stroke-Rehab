@@ -44,25 +44,25 @@ ProcessData = function(data_) {
 	data_
 }
 
-acc2pos = function(t, a_t) {
+distance = function(t, a_t) {
+	a_t = as.matrix(a_t)
+	
+	print(str(t))
+	print(str(a_t))
+	
 	library(caTools)
 	
 	v_t = a_t * 0
 	p_t = v_t
 	
-	for (i in 2:length(t)) {
-		v_t[i] = trapz(t[1:i], a_t[1:i])
-	}
-	for (i in 3:length(t)) {
-		p_t[i] = trapz(t[1:i], v_t[1:i])
-	}
+	v_t = trapz(t, a_t)
+	p_t = trapz(t, v_t)
 	
-	# par(mfrow = c(3, 1))
-	# plot(t, a_t)
-	# plot(t, v_t)
-	# plot(t, p_t)
+	print(str(p_t))
 	
-	tail(p_t) - head(p_t)
+	print(tail(p_t) - head(p_t))
+	
+	norm(tail(p_t) - head(p_t), t = "F")
 }
 
 Movement = function(data_) {
