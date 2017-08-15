@@ -94,8 +94,17 @@ CountMovement = function(data_) {
 	length(data_$null) - 1
 }
 
-GetPeriod = function(data_, i, col) {
+GetAvgPeriod = function(data_, i, col) {
+	data_$avg[data_$null[i]:(data_$null[i + 1] - 1), col]
+}
+
+GetRawPeriod = function(data_, i, col) {
 	data_$raw[data_$null[i]:(data_$null[i + 1] - 1), col]
 }
+
+GetTimePeriod = function(data_, i) {
+	data_$time[data_$null[i]:(data_$null[i + 1] - 1)]
+}
+
 
 
