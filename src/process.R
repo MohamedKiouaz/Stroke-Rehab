@@ -37,7 +37,10 @@ ProcessData = function(data_) {
 	data_$similarity_xcorr = XCORR_Similarity(data_, "norm")
 	data_$score_xcorr = median(data_$similarity_xcorr)
 	
-	cat(Sys.time() - start_time, "sec to process", data_$filename, "\n")
+	cat(Sys.time() - start_time,
+		"sec to process",
+		data_$filename,
+		"\n")
 	
 	PlotData(data_)
 	
@@ -103,6 +106,3 @@ GetRawPeriod = function(data_, i, col) {
 GetTimePeriod = function(data_, i) {
 	data_$time[data_$null[i]:(data_$null[i + 1] - 1)]
 }
-
-
-

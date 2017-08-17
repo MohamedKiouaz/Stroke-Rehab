@@ -6,8 +6,8 @@ DTW_Similarity = function(data_, col) {
 	for (i in 1:data_$count)
 		for (j in 1:i) {
 			alignment = dtw(GetAvgPeriod(data_, i, col),
-											GetAvgPeriod(data_, j, col),
-											keep = TRUE)
+							GetAvgPeriod(data_, j, col),
+							keep = TRUE)
 			
 			
 			similarity[i, j] = alignment$normalizedDistance
@@ -31,9 +31,11 @@ DTW_Similarity = function(data_, col) {
 					
 					pdf(file = outputfile, 15, 10)
 					
-					plot(alignment,
-							 type = "twoway",
-							 main = paste("DTW", i, j, data_$filename))
+					plot(
+						alignment,
+						type = "twoway",
+						main = paste("DTW", i, j, data_$filename)
+					)
 					dev.off()
 				}
 			}
