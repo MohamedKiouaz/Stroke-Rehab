@@ -21,28 +21,57 @@ ProcessData = function(data_) {
 	colnames(data_$avg) = c("x", "y", "z", "norm")
 	
 	data_ = Movement(data_)
-	
+
 	data_$count = CountMovement(data_)
-	
+
 	data_$period = median(tail(data_$null, data_$count) - head(data_$null, data_$count))
-	
+
 	source(file = "src/score.R")
 	data_$score = Score(data_)
-	
+
 	source(file = "src/score_dtw.R")
 	data_$similarity_dtw = DTW_Similarity(data_, "norm")
 	data_$score_dtw = median(data_$similarity_dtw)
-	
+
 	source(file = "src/score_xcorr.R")
 	data_$similarity_xcorr = XCORR_Similarity(data_, "norm")
 	data_$score_xcorr = median(data_$similarity_xcorr)
-	
+
+	PlotData(data_)
+
 	cat(Sys.time() - start_time,
-		"sec to process",
+		"sec to process and plot",
 		data_$filename,
 		"\n")
 	
-	PlotData(data_)
+	# data_$null = which(data_$raw[, "norm"] > 8)
+	# i = length(data_$null)
+	# while (i > 1) {
+	# 	if (abs(data_$time[data_$null[i - 1]] - data_$time[data_$null[i]]) < 30)
+	# 		data_$null = data_$null[-i]
+	# 	i = i - 1
+	# }
+	# 
+	# print(data_$time[data_$null])
+	# 
+	# print(data_$null)
+	# 
+	# for (i in 1:(length(data_$null) - 1)) {
+	# 	Mydata = data.frame(data_$time[data_$null[i]:data_$null[i + 1]], 
+	# 						data_$raw$x[data_$null[i]:data_$null[i + 1]],
+	# 						data_$raw$y[data_$null[i]:data_$null[i + 1]],
+	# 						data_$raw$z[data_$null[i]:data_$null[i + 1]])
+	# 	f = strcat(paste(strcat(substr(data_$filename, 1, 2), "_ex"), i, sep = ""), ".csv")
+	# 	write.csv(Mydata, file = f, row.names = FALSE)
+	# }
+	# 
+	# library(ggplot2)
+	# print(qplot(
+	# 	data_$time,
+	# 	data_$raw[, "norm"],
+	# 	geom = "line",
+	# 	xlab = data_$filename
+	# ))
 	
 	data_
 }

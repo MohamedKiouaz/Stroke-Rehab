@@ -31,7 +31,7 @@ PlotData = function(data_) {
 	p0 = ggplot()  + coord_cartesian()
 	p0 = p0 + geom_line(aes(x = time, y = raw.norm, colour = "Raw"), data = data_render)
 	p0 = p0 + geom_point(aes(x = time, y = 0, colour = "New half repetition"), data = data_render2)
-	p0 = p0 + labs(x = "Time", y = "Norm", title = "Norm")
+	p0 = p0 + labs(x = "Time", y = "Norm", title = "Raw Norm")
 	p0 = p0 + scale_color_discrete(name = NULL)
 	
 	p1 = ggplot()  + coord_cartesian()

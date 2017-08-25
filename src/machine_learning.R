@@ -4,7 +4,7 @@ library(randomForest)
 feature_matrix = function(data_) {
 	f_matrix = matrix(0, data_$count, 7)
 	for (i in 1:data_$count) {
-		if (mod(i, 4) != 0) {
+		if (i %% 4 != 0) {
 			period = GetRawPeriod(data_, i, col = 1:4)
 			time = GetTimePeriod(data_, i)
 			max_vector = as.matrix(period[which.max(period[, 4]), 1:3])
@@ -17,13 +17,13 @@ feature_matrix = function(data_) {
 		}
 	}
 	
-	f_matrix[f_matrix[, 5] != 0,]
+	f_matrix[f_matrix[, 5] != 0, ]
 }
 
 test_matrix = function(data_) {
 	f_matrix = matrix(0, data_$count, 7)
 	for (i in 1:data_$count) {
-		if (mod(i, 4) == 0) {
+		if (i %% 4 == 0) {
 			period = GetRawPeriod(data_, i, col = 1:4)
 			time = GetTimePeriod(data_, i)
 			max_vector = as.matrix(period[which.max(period[, 4]), 1:3])
@@ -36,7 +36,7 @@ test_matrix = function(data_) {
 		}
 	}
 	
-	f_matrix[f_matrix[, 5] != 0,]
+	f_matrix[f_matrix[, 5] != 0, ]
 }
 
 features = sapply(dd, feature_matrix)
@@ -68,4 +68,5 @@ print(head(
 	)
 ))
 
-print(model.d_lm$finalModel)
+print(model.d_lm)
+
