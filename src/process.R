@@ -10,15 +10,7 @@ ProcessData = function(data_) {
 	data_$raw = cbind(data_$raw, A)
 	colnames(data_$raw) = c("x", "y", "z", "norm")
 	
-	avg_filter = as.numeric(matrix(1 / AVERAGING_FILTER_STEPS, 1, AVERAGING_FILTER_STEPS))
-	
-	data_$avg = apply(data_$raw[1:3], 2, function(X)
-		filter(X, avg_filter, method = "convolution", circular = TRUE))
-	data_$avg = apply(data_$avg, 2, detrend)
-	A = apply(data_$avg, 1, function(X)
-		norm(as.matrix(X)))
-	data_$avg = cbind(data_$avg, A)
-	colnames(data_$avg) = c("x", "y", "z", "norm")
+	data_ = FilterData(data_)
 	
 	data_ = Movement(data_)
 
@@ -72,6 +64,20 @@ ProcessData = function(data_) {
 	# 	geom = "line",
 	# 	xlab = data_$filename
 	# ))
+	
+	data_
+}
+
+FilterData = function(data_) {
+	avg_filter = as.numeric(matrix(1 / AVERAGING_FILTER_STEPS, 1, AVERAGING_FILTER_STEPS))
+	
+	data_$avg = apply(data_$raw[1:3], 2, function(X)
+		filter(X, avg_filter, method = "convolution", circular = TRUE))
+	data_$avg = apply(data_$avg, 2, detrend)
+	A = apply(data_$avg, 1, function(X)
+		norm(as.matrix(X)))
+	data_$avg = cbind(data_$avg, A)
+	colnames(data_$avg) = c("x", "y", "z", "norm")
 	
 	data_
 }
