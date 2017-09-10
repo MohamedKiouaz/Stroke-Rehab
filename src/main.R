@@ -1,3 +1,4 @@
+#Uncomment to not reload the data from the csv files
 #rm(list = ls())
 
 ##### Sources #####
