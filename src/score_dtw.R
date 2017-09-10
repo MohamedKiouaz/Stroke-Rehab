@@ -3,8 +3,6 @@ DTW_Similarity = function(data_, col) {
 	
 	similarity = matrix(0, data_$count, data_$count)
 	
-	return(similarity)
-	
 	for (i in 1:data_$count)
 		for (j in 1:i) {
 			alignment = dtw(GetAvgPeriod(data_, i, col),
